@@ -2,7 +2,11 @@
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("hej Sanna");
+
+		DigitalClock clock2 = new DigitalClock(5);
+		System.out.println(clock2.getRemainingGameTimeAsFormattedString());
+		clock2.start();
+
 	}
 
 }
