@@ -33,6 +33,16 @@ public class TimerController {
 		this.rightTimer.reset();
 	}
 
+	public void incrementGameTime() {
+		this.leftTimer.incrementTime();
+		this.rightTimer.incrementTime();
+	}
+
+	public void decrementGameTime() {
+		this.leftTimer.decrementTime();
+		this.rightTimer.decrementTime();
+	}
+
 	public void registerPropertyChangeListenerLeft(PropertyChangeListener propertyChangeListener) {
 		leftTimer.addObserver(propertyChangeListener);
 	}

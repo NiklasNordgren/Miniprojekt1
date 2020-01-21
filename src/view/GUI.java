@@ -29,25 +29,26 @@ public class GUI extends JFrame {
 	}
 
 	private void init() {
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+
 		setSize(new Dimension(700, 300));
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		// c.fill = GridBagConstraints.BOTH;
+
 		c.insets = new Insets(10, 10, 10, 10);
 
 		initLeftDigitalClock();
 		initRightDigitalClock();
-
-		buttonPanel = new ButtonPanel();
+		initButtonPanel();
 
 		c.weightx = 2;
 		c.weighty = 2;
@@ -72,6 +73,7 @@ public class GUI extends JFrame {
 		leftDigitalClock.setButtonText("End turn (alt-z)");
 		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
 		leftDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Player 1 end turn pressed");
@@ -86,9 +88,28 @@ public class GUI extends JFrame {
 		rightDigitalClock.setButtonText("End turn (alt-m)");
 		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
 		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Player 2 end turn pressed");
+			}
+		});
+	}
+
+	private void initButtonPanel() {
+		buttonPanel = new ButtonPanel();
+		buttonPanel.addIncrementGameTimeButtonActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				timerController.incrementGameTime();
+			}
+		});
+		buttonPanel.addDecrementGameTimeButtonActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				timerController.decrementGameTime();
 			}
 		});
 	}

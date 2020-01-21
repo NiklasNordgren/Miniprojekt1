@@ -35,13 +35,15 @@ public class Timer {
 		if (!this.isRunning) {
 			this.totalGameTimeSeconds++;
 			this.remainingGameTimeSeconds++;
+			this.updateRemainingGameTimeAsFormattedString();
 		}
 	}
 
-	public void decreaseTime() {
-		if (!this.isRunning) {
+	public void decrementTime() {
+		if (!this.isRunning && totalGameTimeSeconds > 0) {
 			this.remainingGameTimeSeconds--;
 			this.totalGameTimeSeconds--;
+			this.updateRemainingGameTimeAsFormattedString();
 		}
 	}
 
