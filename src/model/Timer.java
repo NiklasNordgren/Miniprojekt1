@@ -54,11 +54,6 @@ public class Timer {
 		this.updateRemainingGameTimeAsFormattedString();
 	}
 
-	/*
-	 * public void setRemainingGameTimeSeconds(long remainingGameTimeSeconds) {
-	 * this.remainingGameTimeSeconds = remainingGameTimeSeconds; }
-	 */
-
 	public boolean isRunning() {
 		return isRunning;
 	}
@@ -79,10 +74,9 @@ public class Timer {
 
 	public void addObserver(PropertyChangeListener propertyChangeListener) {
 		this.propertyChangeSupport.addPropertyChangeListener("isRunning", propertyChangeListener);
-		this.propertyChangeSupport.addPropertyChangeListener("totalGameTimeSeconds", propertyChangeListener);
-		this.propertyChangeSupport.addPropertyChangeListener("remainingGameTimeSeconds", propertyChangeListener);
 		this.propertyChangeSupport.addPropertyChangeListener("remainingGameTimeAsFormattedString",
 				propertyChangeListener);
+		this.updateRemainingGameTimeAsFormattedString();
 	}
 
 	public void run() {
@@ -111,12 +105,6 @@ public class Timer {
 				}
 			}
 		}, 0, 1000);
-
-		/*
-		 * this.thread = new Thread() { public void run() { while (isRunning &&
-		 * remainingGameTimeSeconds >= 0) {
-		 * System.out.println(remainingGameTimeSeconds); decreaseRemainingTime(); try {
-		 * sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); } } } };
-		 */
 	}
+
 }

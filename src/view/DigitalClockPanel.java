@@ -38,7 +38,6 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		c.gridy = 0;
 		setBackground(Color.white);
 
-		timeField.setText("HH:mm:ss");
 		timeField.setEditable(false);
 		timeField.setPreferredSize(new Dimension(300, 75));
 		timeField.setFont(font);
