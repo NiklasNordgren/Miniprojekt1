@@ -41,12 +41,4 @@ public class TimerController {
 		rightTimer.addObserver(propertyChangeListener);
 	}
 
-	public String getLeftTimerFomatedString() {
-		return leftTimer.getRemainingGameTimeAsFormattedString();
-	}
-
-	public String getRightTimerFomatedString() {
-		return rightTimer.getRemainingGameTimeAsFormattedString();
-	}
-
 }

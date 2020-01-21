@@ -78,7 +78,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		timeField.setText(evt.getPropertyName());
+		timeField.setText(evt.getNewValue().toString());
 		timeField.repaint();
 		System.out.print(evt);
 

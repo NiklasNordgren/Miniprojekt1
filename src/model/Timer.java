@@ -8,6 +8,7 @@ public class Timer {
 
 	private long totalGameTimeSeconds;
 	private long remainingGameTimeSeconds;
+	private String remainingGameTimeAsFormattedString;
 	private boolean isRunning;
 	private PropertyChangeSupport propertyChangeSupport;
 
@@ -50,6 +51,7 @@ public class Timer {
 
 	public void decreaseRemainingTime() {
 		this.remainingGameTimeSeconds--;
+		this.updateRemainingGameTimeAsFormattedString();
 	}
 
 	/*
@@ -65,18 +67,22 @@ public class Timer {
 		this.isRunning = isRunning;
 	}
 
-	public String getRemainingGameTimeAsFormattedString() {
+	private void updateRemainingGameTimeAsFormattedString() {
 		int hours = Math.toIntExact(remainingGameTimeSeconds / 3600);
 		int minutes = Math.toIntExact((remainingGameTimeSeconds - (3600 * hours)) / 60);
 		int seconds = Math.toIntExact((remainingGameTimeSeconds - (3600 * hours) - (minutes * 60)));
 
-		return "hours: " + hours + ", minutes: " + minutes + ", seconds: " + seconds + "";
+		this.remainingGameTimeAsFormattedString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+		this.propertyChangeSupport.firePropertyChange("remainingGameTimeAsFormattedString", null,
+				remainingGameTimeAsFormattedString);
 	}
 
 	public void addObserver(PropertyChangeListener propertyChangeListener) {
 		this.propertyChangeSupport.addPropertyChangeListener("isRunning", propertyChangeListener);
 		this.propertyChangeSupport.addPropertyChangeListener("totalGameTimeSeconds", propertyChangeListener);
 		this.propertyChangeSupport.addPropertyChangeListener("remainingGameTimeSeconds", propertyChangeListener);
+		this.propertyChangeSupport.addPropertyChangeListener("remainingGameTimeAsFormattedString",
+				propertyChangeListener);
 	}
 
 	public void run() {
@@ -99,7 +105,7 @@ public class Timer {
 
 			@Override
 			public void run() {
-				if (isRunning && remainingGameTimeSeconds >= 0) {
+				if (isRunning && remainingGameTimeSeconds > 0) {
 					System.out.println(remainingGameTimeSeconds);
 					decreaseRemainingTime();
 				}
