@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
@@ -17,7 +18,6 @@ public class ButtonPanel extends JPanel {
 	private JButton decrementGameTimeButton = new JButton("-");
 	private JButton moveCursorLeftButton = new JButton("<");
 	private JButton moveCursorRightButton = new JButton(">");
-
 	private JPanel mainPanel = new JPanel();
 
 	public ButtonPanel() {
@@ -27,7 +27,11 @@ public class ButtonPanel extends JPanel {
 	private void init() {
 		this.setLayout(new GridBagLayout());
 		this.setBackground(Color.white);
-		this.setBorder(BorderFactory.createTitledBorder("ButtonPanel"));
+		this.setBorder(BorderFactory.createEmptyBorder());
+
+		playAndPauseButton.setPreferredSize(new Dimension(100, 100));
+		playAndPauseButton.setOpaque(true);
+
 		this.mainPanel.setLayout(new BorderLayout());
 		this.mainPanel.add(incrementGameTimeButton, BorderLayout.NORTH);
 		this.mainPanel.add(decrementGameTimeButton, BorderLayout.SOUTH);
