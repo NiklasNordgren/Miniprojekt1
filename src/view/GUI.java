@@ -98,6 +98,13 @@ public class GUI extends JFrame {
 
 	private void initButtonPanel() {
 		buttonPanel = new ButtonPanel();
+		buttonPanel.addPlayAndPauseButtonActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				timerController.startAndStop();
+			}
+		});
 		buttonPanel.addIncrementGameTimeButtonActionListener(new ActionListener() {
 
 			@Override

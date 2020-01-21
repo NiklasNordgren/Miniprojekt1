@@ -20,12 +20,11 @@ public class TimerController {
 		this.rightTimer = new Timer();
 	}
 
-	public void start() {
-		activeTimer.run();
-	}
-
-	public void stop() {
-		this.activeTimer.stop();
+	public void startAndStop() {
+		if (this.activeTimer.isRunning())
+			this.activeTimer.stop();
+		else
+			this.activeTimer.run();
 	}
 
 	public void reset() {
@@ -49,6 +48,17 @@ public class TimerController {
 
 	public void registerPropertyChangeListenerRight(PropertyChangeListener propertyChangeListener) {
 		rightTimer.addObserver(propertyChangeListener);
+	}
+
+	public boolean isRunning() {
+		return this.activeTimer.isRunning();
+	}
+
+	public void toggleRunning() {
+		if (this.activeTimer.isRunning())
+			this.activeTimer.setRunning(false);
+		else
+			this.activeTimer.setRunning(true);
 	}
 
 }

@@ -13,7 +13,7 @@ public class Timer {
 	private PropertyChangeSupport propertyChangeSupport;
 
 	public Timer() {
-		this(5);
+		this(3661);
 	}
 
 	public Timer(long totalGameTimeSeconds) {
@@ -21,6 +21,7 @@ public class Timer {
 		this.remainingGameTimeSeconds = totalGameTimeSeconds;
 		this.isRunning = false;
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
+		setupTimer();
 	}
 
 	public long getTotalGameTimeSeconds() {
@@ -83,7 +84,6 @@ public class Timer {
 
 	public void run() {
 		this.isRunning = true;
-		this.startTimer();
 	}
 
 	public void stop() {
@@ -95,7 +95,7 @@ public class Timer {
 		this.remainingGameTimeSeconds = totalGameTimeSeconds;
 	}
 
-	private void startTimer() {
+	private void setupTimer() {
 
 		new java.util.Timer().scheduleAtFixedRate(new TimerTask() {
 
