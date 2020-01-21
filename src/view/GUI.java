@@ -44,29 +44,8 @@ public class GUI extends JFrame {
 		// c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(10, 10, 10, 10);
 
-		leftDigitalClock = new DigitalClockPanel();
-		timerController.registerPropertyChangeListenerLeft(leftDigitalClock);
-		leftDigitalClock.setBorderTitle("Player 1");
-		leftDigitalClock.setButtonText("End turn (alt-z)");
-		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
-		leftDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Player 1 end turn pressed");
-			}
-		});
-
-		rightDigitalClock = new DigitalClockPanel();
-		timerController.registerPropertyChangeListenerRight(rightDigitalClock);
-		rightDigitalClock.setBorderTitle("Player 2");
-		rightDigitalClock.setButtonText("End turn (alt-m)");
-		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
-		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Player 2 end turn pressed");
-			}
-		});
+		initLeftDigitalClock();
+		initRightDigitalClock();
 
 		buttonPanel = new ButtonPanel();
 
@@ -84,6 +63,34 @@ public class GUI extends JFrame {
 
 		pack();
 		setVisible(true);
+	}
+
+	private void initLeftDigitalClock() {
+		leftDigitalClock = new DigitalClockPanel();
+		timerController.registerPropertyChangeListenerLeft(leftDigitalClock);
+		leftDigitalClock.setBorderTitle("Player 1");
+		leftDigitalClock.setButtonText("End turn (alt-z)");
+		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
+		leftDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Player 1 end turn pressed");
+			}
+		});
+	}
+
+	private void initRightDigitalClock() {
+		rightDigitalClock = new DigitalClockPanel();
+		timerController.registerPropertyChangeListenerRight(rightDigitalClock);
+		rightDigitalClock.setBorderTitle("Player 2");
+		rightDigitalClock.setButtonText("End turn (alt-m)");
+		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
+		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Player 2 end turn pressed");
+			}
+		});
 	}
 
 }
