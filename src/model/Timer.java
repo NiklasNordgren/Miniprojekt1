@@ -63,6 +63,7 @@ public class Timer {
 
 	public void setRunning(boolean isRunning) {
 		this.isRunning = isRunning;
+		this.propertyChangeSupport.firePropertyChange("isRunning", !isRunning, isRunning);
 	}
 
 	private void updateRemainingGameTimeAsFormattedString() {

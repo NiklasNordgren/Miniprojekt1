@@ -32,11 +32,11 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 
 	private void init() {
 		setLayout(new GridBagLayout());
+		setBackground(Color.white);
 
 		c.insets = new Insets(50, 10, 10, 10);
 		c.gridx = 0;
 		c.gridy = 0;
-		setBackground(Color.white);
 
 		timeField.setEditable(false);
 		timeField.setPreferredSize(new Dimension(300, 75));
@@ -50,7 +50,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		endTurnPanel.setBackground(Color.white);
 		endTurnPanel.setLayout(new GridBagLayout());
 		endTurnButton.setPreferredSize(new Dimension(150, 35));
-		endTurnButton.setBackground(Color.white);
+		endTurnButton.setBackground(Color.lightGray);
 		endTurnPanel.add(endTurnButton, c);
 
 		add(timerPanel, c);
@@ -75,10 +75,14 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		this.endTurnButton.addActionListener(actionListener);
 	}
 
+	public void setBackgroundColor(Color color) {
+		timeField.setBackground(color);
+	}
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		timeField.setText(evt.getNewValue().toString());
-		timeField.repaint();
+		System.out.println(evt);
 	}
 
 }

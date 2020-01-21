@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class ButtonPanel extends JPanel {
+public class ButtonPanel extends JPanel implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +33,12 @@ public class ButtonPanel extends JPanel {
 		this.setBorder(BorderFactory.createEmptyBorder());
 
 		playAndPauseButton.setPreferredSize(new Dimension(100, 100));
-		playAndPauseButton.setOpaque(true);
+
+		playAndPauseButton.setBackground(Color.lightGray);
+		incrementGameTimeButton.setBackground(Color.lightGray);
+		decrementGameTimeButton.setBackground(Color.lightGray);
+		moveCursorLeftButton.setBackground(Color.lightGray);
+		moveCursorRightButton.setBackground(Color.lightGray);
 
 		this.mainPanel.setLayout(new BorderLayout());
 		this.mainPanel.add(incrementGameTimeButton, BorderLayout.NORTH);
@@ -60,6 +67,11 @@ public class ButtonPanel extends JPanel {
 
 	public void addMoveCursorRightButtonActionListener(ActionListener actionListener) {
 		this.moveCursorRightButton.addActionListener(actionListener);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		System.out.println(evt.getNewValue());
 	}
 
 }
