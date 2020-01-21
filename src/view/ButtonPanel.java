@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -39,6 +40,26 @@ public class ButtonPanel extends JPanel {
 		this.mainPanel.add(moveCursorLeftButton, BorderLayout.WEST);
 		this.mainPanel.add(moveCursorRightButton, BorderLayout.EAST);
 		this.add(mainPanel);
+	}
+
+	public void addPlayAndPauseButtonActionListener(ActionListener actionListener) {
+		this.playAndPauseButton.addActionListener(actionListener);
+	}
+
+	public void addIncrementGameTimeButtonActionListener(ActionListener actionListener) {
+		this.incrementGameTimeButton.addActionListener(actionListener);
+	}
+
+	public void addDecrementGameTimeButtonActionListener(ActionListener actionListener) {
+		this.decrementGameTimeButton.addActionListener(actionListener);
+	}
+
+	public void addMoveCursorLeftButtonActionListener(ActionListener actionListener) {
+		this.moveCursorLeftButton.addActionListener(actionListener);
+	}
+
+	public void addMoveCursorRightButtonActionListener(ActionListener actionListener) {
+		this.moveCursorRightButton.addActionListener(actionListener);
 	}
 
 }

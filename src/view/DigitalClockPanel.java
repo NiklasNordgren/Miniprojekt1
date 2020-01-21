@@ -71,7 +71,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		endTurnButton.setMnemonic(hotKey);
 	}
 
-	public void setActionListener(ActionListener actionListener) {
+	public void addEndTurnButtonActionListener(ActionListener actionListener) {
 		this.endTurnButton.addActionListener(actionListener);
 	}
 

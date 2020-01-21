@@ -49,7 +49,7 @@ public class GUI extends JFrame {
 		leftDigitalClock.setBorderTitle("Player 1");
 		leftDigitalClock.setButtonText("End turn (alt-z)");
 		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
-		leftDigitalClock.setActionListener(new ActionListener() {
+		leftDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Player 1 end turn pressed");
@@ -61,7 +61,7 @@ public class GUI extends JFrame {
 		rightDigitalClock.setBorderTitle("Player 2");
 		rightDigitalClock.setButtonText("End turn (alt-m)");
 		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
-		rightDigitalClock.setActionListener(new ActionListener() {
+		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Player 2 end turn pressed");
