@@ -7,7 +7,6 @@ public class Main {
 
 		TimerController timeController = new TimerController();
 		new GUI(timeController);
-		// timeController.start();
 
 	}
 }

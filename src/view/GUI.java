@@ -77,7 +77,7 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Player 1 end turn pressed");
+				timerController.endTurn();
 			}
 		});
 
@@ -94,7 +94,7 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Player 2 end turn pressed");
+				timerController.endTurn();
 			}
 		});
 

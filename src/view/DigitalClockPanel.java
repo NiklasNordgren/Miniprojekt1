@@ -81,8 +81,17 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		timeField.setText(evt.getNewValue().toString());
-		System.out.println(evt);
+
+		if (evt.getPropertyName().equals("remainingGameTimeAsFormattedString")) {
+			timeField.setText(evt.getNewValue().toString());
+		} else if (evt.getPropertyName().equals("isRunning")) {
+			/*
+			 * if (evt.getNewValue() != null && (boolean) evt.getNewValue()) {
+			 * this.setBackgroundColor(Color.green); } else {
+			 * this.setBackgroundColor(Color.lightGray); }
+			 */
+		}
+
 	}
 
 }
