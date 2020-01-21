@@ -12,6 +12,7 @@ public class TimerController {
 
 	public TimerController() {
 		this.createTimers();
+		this.activeTimer = leftTimer;
 	}
 
 	private void createTimers() {

@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class DigitalClockPanel extends JPanel {
+public class DigitalClockPanel extends JPanel implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField timeField = new JTextField();
@@ -72,6 +74,14 @@ public class DigitalClockPanel extends JPanel {
 
 	public void setActionListener(ActionListener actionListener) {
 		this.endTurnButton.addActionListener(actionListener);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		timeField.setText(evt.getPropertyName());
+		timeField.repaint();
+		System.out.print(evt);
+
 	}
 
 }

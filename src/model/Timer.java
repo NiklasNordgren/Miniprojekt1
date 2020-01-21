@@ -2,6 +2,7 @@ package model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.TimerTask;
 
 public class Timer {
 
@@ -9,10 +10,9 @@ public class Timer {
 	private long remainingGameTimeSeconds;
 	private boolean isRunning;
 	private PropertyChangeSupport propertyChangeSupport;
-	private Thread thread;
 
 	public Timer() {
-		this(60);
+		this(5);
 	}
 
 	public Timer(long totalGameTimeSeconds) {
@@ -20,7 +20,6 @@ public class Timer {
 		this.remainingGameTimeSeconds = totalGameTimeSeconds;
 		this.isRunning = false;
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
-		setupTimer();
 	}
 
 	public long getTotalGameTimeSeconds() {
@@ -75,12 +74,14 @@ public class Timer {
 	}
 
 	public void addObserver(PropertyChangeListener propertyChangeListener) {
-		this.propertyChangeSupport.addPropertyChangeListener(propertyChangeListener);
+		this.propertyChangeSupport.addPropertyChangeListener("isRunning", propertyChangeListener);
+		this.propertyChangeSupport.addPropertyChangeListener("totalGameTimeSeconds", propertyChangeListener);
+		this.propertyChangeSupport.addPropertyChangeListener("remainingGameTimeSeconds", propertyChangeListener);
 	}
 
 	public void run() {
 		this.isRunning = true;
-		this.thread.run();
+		this.startTimer();
 	}
 
 	public void stop() {
@@ -92,19 +93,24 @@ public class Timer {
 		this.remainingGameTimeSeconds = totalGameTimeSeconds;
 	}
 
-	private void setupTimer() {
-		this.thread = new Thread() {
+	private void startTimer() {
+
+		new java.util.Timer().scheduleAtFixedRate(new TimerTask() {
+
+			@Override
 			public void run() {
-				while (isRunning && remainingGameTimeSeconds >= 0) {
+				if (isRunning && remainingGameTimeSeconds >= 0) {
 					System.out.println(remainingGameTimeSeconds);
 					decreaseRemainingTime();
-					try {
-						sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 				}
 			}
-		};
+		}, 0, 1000);
+
+		/*
+		 * this.thread = new Thread() { public void run() { while (isRunning &&
+		 * remainingGameTimeSeconds >= 0) {
+		 * System.out.println(remainingGameTimeSeconds); decreaseRemainingTime(); try {
+		 * sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); } } } };
+		 */
 	}
 }

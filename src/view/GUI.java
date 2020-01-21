@@ -13,14 +13,18 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import controller.TimerController;
+
 public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private DigitalClockPanel leftDigitalClock;
 	private DigitalClockPanel rightDigitalClock;
 	private ButtonPanel buttonPanel;
+	private TimerController timerController;
 
-	public GUI() {
+	public GUI(TimerController timerController) {
+		this.timerController = timerController;
 		init();
 	}
 
@@ -41,8 +45,9 @@ public class GUI extends JFrame {
 		c.insets = new Insets(10, 10, 10, 10);
 
 		leftDigitalClock = new DigitalClockPanel();
+		timerController.registerPropertyChangeListenerLeft(leftDigitalClock);
 		leftDigitalClock.setBorderTitle("Player 1");
-		leftDigitalClock.setButtonText("End button (alt-z)");
+		leftDigitalClock.setButtonText("End turn (alt-z)");
 		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
 		leftDigitalClock.setActionListener(new ActionListener() {
 			@Override
@@ -52,8 +57,9 @@ public class GUI extends JFrame {
 		});
 
 		rightDigitalClock = new DigitalClockPanel();
+		timerController.registerPropertyChangeListenerRight(rightDigitalClock);
 		rightDigitalClock.setBorderTitle("Player 2");
-		rightDigitalClock.setButtonText("End button (alt-m)");
+		rightDigitalClock.setButtonText("End turn (alt-m)");
 		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
 		rightDigitalClock.setActionListener(new ActionListener() {
 			@Override
