@@ -103,7 +103,6 @@ public class Timer {
 			@Override
 			public void run() {
 				if (isRunning && remainingGameTimeSeconds > 0) {
-					System.out.println(remainingGameTimeSeconds);
 					decreaseRemainingTime();
 				}
 			}

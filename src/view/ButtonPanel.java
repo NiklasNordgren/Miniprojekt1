@@ -5,14 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class ButtonPanel extends JPanel implements PropertyChangeListener {
+public class ButtonPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -67,11 +65,6 @@ public class ButtonPanel extends JPanel implements PropertyChangeListener {
 
 	public void addMoveCursorRightButtonActionListener(ActionListener actionListener) {
 		this.moveCursorRightButton.addActionListener(actionListener);
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println(evt.getNewValue());
 	}
 
 }

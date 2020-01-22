@@ -33,13 +33,23 @@ public class TimerController {
 	}
 
 	public void incrementGameTime() {
-		this.leftTimer.incrementTime();
-		this.rightTimer.incrementTime();
+
+		// TODO: Needs two inparameters, which time unit & timer to increment
+
+		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
+			this.leftTimer.incrementTime();
+			this.rightTimer.incrementTime();
+		}
 	}
 
 	public void decrementGameTime() {
-		this.leftTimer.decrementTime();
-		this.rightTimer.decrementTime();
+
+		// TODO: Needs two inparameters, which time unit & timer to decrement
+
+		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
+			this.leftTimer.decrementTime();
+			this.rightTimer.decrementTime();
+		}
 	}
 
 	public void registerPropertyChangeListenerLeft(PropertyChangeListener propertyChangeListener) {
@@ -55,10 +65,12 @@ public class TimerController {
 	}
 
 	public void toggleRunning() {
-		if (this.activeTimer.isRunning())
+		if (this.activeTimer.isRunning()) {
 			this.activeTimer.setRunning(false);
-		else
+		} else {
 			this.activeTimer.setRunning(true);
+		}
+
 	}
 
 	public void endTurn() {

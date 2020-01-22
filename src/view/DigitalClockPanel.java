@@ -72,11 +72,15 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 	}
 
 	public void addEndTurnButtonActionListener(ActionListener actionListener) {
-		this.endTurnButton.addActionListener(actionListener);
+		endTurnButton.addActionListener(actionListener);
 	}
 
 	public void setBackgroundColor(Color color) {
 		timeField.setBackground(color);
+	}
+
+	public void setEndTurnButtonEnabled(boolean tof) {
+		endTurnButton.setEnabled(tof);
 	}
 
 	@Override
@@ -85,6 +89,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		if (evt.getPropertyName().equals("remainingGameTimeAsFormattedString")) {
 			timeField.setText(evt.getNewValue().toString());
 		} else if (evt.getPropertyName().equals("isRunning")) {
+			System.out.println(evt);
 			/*
 			 * if (evt.getNewValue() != null && (boolean) evt.getNewValue()) {
 			 * this.setBackgroundColor(Color.green); } else {

@@ -73,11 +73,13 @@ public class GUI extends JFrame {
 		leftDigitalClock.setButtonText("End turn (alt-z)");
 		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
 		leftDigitalClock.setBackgroundColor(Color.green);
+		leftDigitalClock.setEndTurnButtonEnabled(false);
 		leftDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				timerController.endTurn();
+				rightDigitalClock.setEndTurnButtonEnabled(false);
 			}
 		});
 
@@ -90,11 +92,13 @@ public class GUI extends JFrame {
 		rightDigitalClock.setButtonText("End turn (alt-m)");
 		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
 		rightDigitalClock.setBackgroundColor(Color.lightGray);
+		rightDigitalClock.setEndTurnButtonEnabled(false);
 		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				timerController.endTurn();
+				leftDigitalClock.setEndTurnButtonEnabled(false);
 			}
 		});
 
@@ -107,6 +111,7 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				timerController.startAndStop();
+
 			}
 		});
 		buttonPanel.addIncrementGameTimeButtonActionListener(new ActionListener() {
