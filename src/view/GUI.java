@@ -155,10 +155,11 @@ public class GUI extends JFrame {
 		if (leftDigitalClock.isEndTurnButtonEnabled()) {
 			leftDigitalClock.setEndTurnButtonEnabled(false);
 			rightDigitalClock.setEndTurnButtonEnabled(true);
-
+			rightDigitalClock.grabFocusOnEndTurnButton();
 		} else if (rightDigitalClock.isEndTurnButtonEnabled()) {
 			rightDigitalClock.setEndTurnButtonEnabled(false);
 			leftDigitalClock.setEndTurnButtonEnabled(true);
+			leftDigitalClock.grabFocusOnEndTurnButton();
 		}
 	}
 

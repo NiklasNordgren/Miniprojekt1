@@ -98,4 +98,8 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		return this.endTurnButton.isEnabled();
 	}
 
+	public void grabFocusOnEndTurnButton() {
+		this.endTurnButton.grabFocus();
+	}
+
 }
