@@ -102,7 +102,7 @@ public class GUI extends JFrame {
 				timerController.endTurn();
 				toggleEndTurnButtons();
 				setActivePlayerBackgroundColor();
-				leftDigitalClock.setEndTurnButtonEnabled(true);
+
 			}
 		});
 
@@ -152,11 +152,13 @@ public class GUI extends JFrame {
 	}
 
 	private void toggleEndTurnButtons() {
-		if (this.leftDigitalClock.isEndTurnButtonEnabled()) {
-			this.leftDigitalClock.setEndTurnButtonEnabled(false);
-		}
-		if (this.rightDigitalClock.isEndTurnButtonEnabled()) {
-			this.rightDigitalClock.setEndTurnButtonEnabled(false);
+		if (leftDigitalClock.isEndTurnButtonEnabled()) {
+			leftDigitalClock.setEndTurnButtonEnabled(false);
+			rightDigitalClock.setEndTurnButtonEnabled(true);
+
+		} else if (rightDigitalClock.isEndTurnButtonEnabled()) {
+			rightDigitalClock.setEndTurnButtonEnabled(false);
+			leftDigitalClock.setEndTurnButtonEnabled(true);
 		}
 	}
 
