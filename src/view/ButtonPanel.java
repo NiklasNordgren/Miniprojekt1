@@ -15,56 +15,70 @@ public class ButtonPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JButton playAndPauseButton = new JButton("Play/Pause");
+	private JButton resetButton = new JButton("Reset");
 	private JButton incrementGameTimeButton = new JButton("+");
 	private JButton decrementGameTimeButton = new JButton("-");
 	private JButton moveCursorLeftButton = new JButton("<");
 	private JButton moveCursorRightButton = new JButton(">");
 	private JPanel mainPanel = new JPanel();
+	private JPanel southPanel = new JPanel();
 
 	public ButtonPanel() {
 		init();
 	}
 
 	private void init() {
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.white);
-		this.setBorder(BorderFactory.createEmptyBorder());
+		setLayout(new GridBagLayout());
+		setBackground(Color.white);
+		setBorder(BorderFactory.createEmptyBorder());
 
 		playAndPauseButton.setPreferredSize(new Dimension(100, 100));
 
 		playAndPauseButton.setBackground(Color.lightGray);
+		resetButton.setBackground(Color.lightGray);
 		incrementGameTimeButton.setBackground(Color.lightGray);
 		decrementGameTimeButton.setBackground(Color.lightGray);
 		moveCursorLeftButton.setBackground(Color.lightGray);
 		moveCursorRightButton.setBackground(Color.lightGray);
 
-		this.mainPanel.setLayout(new BorderLayout());
-		this.mainPanel.add(incrementGameTimeButton, BorderLayout.NORTH);
-		this.mainPanel.add(decrementGameTimeButton, BorderLayout.SOUTH);
-		this.mainPanel.add(playAndPauseButton, BorderLayout.CENTER);
-		this.mainPanel.add(moveCursorLeftButton, BorderLayout.WEST);
-		this.mainPanel.add(moveCursorRightButton, BorderLayout.EAST);
-		this.add(mainPanel);
+		mainPanel.setLayout(new BorderLayout());
+		southPanel.setLayout(new BorderLayout());
+
+		mainPanel.add(incrementGameTimeButton, BorderLayout.NORTH);
+		mainPanel.add(playAndPauseButton, BorderLayout.CENTER);
+		mainPanel.add(moveCursorLeftButton, BorderLayout.WEST);
+		mainPanel.add(moveCursorRightButton, BorderLayout.EAST);
+
+		southPanel.add(decrementGameTimeButton, BorderLayout.NORTH);
+		southPanel.add(resetButton, BorderLayout.SOUTH);
+
+		mainPanel.add(southPanel, BorderLayout.SOUTH);
+
+		add(mainPanel);
 	}
 
 	public void addPlayAndPauseButtonActionListener(ActionListener actionListener) {
-		this.playAndPauseButton.addActionListener(actionListener);
+		playAndPauseButton.addActionListener(actionListener);
+	}
+
+	public void addResetButtonActionListener(ActionListener actionListener) {
+		resetButton.addActionListener(actionListener);
 	}
 
 	public void addIncrementGameTimeButtonActionListener(ActionListener actionListener) {
-		this.incrementGameTimeButton.addActionListener(actionListener);
+		incrementGameTimeButton.addActionListener(actionListener);
 	}
 
 	public void addDecrementGameTimeButtonActionListener(ActionListener actionListener) {
-		this.decrementGameTimeButton.addActionListener(actionListener);
+		decrementGameTimeButton.addActionListener(actionListener);
 	}
 
 	public void addMoveCursorLeftButtonActionListener(ActionListener actionListener) {
-		this.moveCursorLeftButton.addActionListener(actionListener);
+		moveCursorLeftButton.addActionListener(actionListener);
 	}
 
 	public void addMoveCursorRightButtonActionListener(ActionListener actionListener) {
-		this.moveCursorRightButton.addActionListener(actionListener);
+		moveCursorRightButton.addActionListener(actionListener);
 	}
 
 }

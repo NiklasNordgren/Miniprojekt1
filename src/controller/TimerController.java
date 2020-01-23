@@ -11,13 +11,17 @@ public class TimerController {
 	private Timer rightTimer;
 
 	public TimerController() {
-		this.createTimers();
+		this(180);
+	}
+
+	public TimerController(int gameTimeInSeconds) {
+		this.createTimers(gameTimeInSeconds);
 		this.activeTimer = leftTimer;
 	}
 
-	private void createTimers() {
-		this.leftTimer = new Timer();
-		this.rightTimer = new Timer();
+	private void createTimers(int gameTimeInSeconds) {
+		this.leftTimer = new Timer(gameTimeInSeconds);
+		this.rightTimer = new Timer(gameTimeInSeconds);
 	}
 
 	public void startAndStop() {

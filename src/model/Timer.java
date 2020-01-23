@@ -13,7 +13,7 @@ public class Timer {
 	private PropertyChangeSupport propertyChangeSupport;
 
 	public Timer() {
-		this(3661);
+		this(3);
 	}
 
 	public Timer(long totalGameTimeSeconds) {
@@ -94,6 +94,7 @@ public class Timer {
 	public void reset() {
 		this.stop();
 		this.remainingGameTimeSeconds = totalGameTimeSeconds;
+		this.updateRemainingGameTimeAsFormattedString();
 	}
 
 	private void setupTimer() {
@@ -104,6 +105,8 @@ public class Timer {
 			public void run() {
 				if (isRunning && remainingGameTimeSeconds > 0) {
 					decreaseRemainingTime();
+				} else {
+					stop();
 				}
 			}
 		}, 0, 1000);

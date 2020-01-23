@@ -114,6 +114,13 @@ public class GUI extends JFrame {
 
 			}
 		});
+		buttonPanel.addResetButtonActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				timerController.reset();
+			}
+		});
 		buttonPanel.addIncrementGameTimeButtonActionListener(new ActionListener() {
 
 			@Override

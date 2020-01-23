@@ -90,11 +90,6 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 			timeField.setText(evt.getNewValue().toString());
 		} else if (evt.getPropertyName().equals("isRunning")) {
 			System.out.println(evt);
-			/*
-			 * if (evt.getNewValue() != null && (boolean) evt.getNewValue()) {
-			 * this.setBackgroundColor(Color.green); } else {
-			 * this.setBackgroundColor(Color.lightGray); }
-			 */
 		}
 
 	}
