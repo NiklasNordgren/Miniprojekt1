@@ -94,7 +94,7 @@ public class GUI extends JFrame {
 		rightDigitalClock.setButtonText("End turn (alt-m)");
 		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
 		rightDigitalClock.setBackgroundColor(Color.white);
-		rightDigitalClock.setEndTurnButtonEnabled(true);
+		rightDigitalClock.setEndTurnButtonEnabled(false);
 		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 
 			@Override
