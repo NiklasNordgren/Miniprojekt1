@@ -49,6 +49,7 @@ public class GUI extends JFrame {
 		initLeftDigitalClock();
 		initRightDigitalClock();
 		initButtonPanel();
+		setActivePlayerBackgroundColor();
 
 		c.weightx = 2;
 		c.weighty = 2;
@@ -72,14 +73,15 @@ public class GUI extends JFrame {
 		leftDigitalClock.setBorderTitle("Player 1");
 		leftDigitalClock.setButtonText("End turn (alt-z)");
 		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
-		leftDigitalClock.setBackgroundColor(Color.green);
-		leftDigitalClock.setEndTurnButtonEnabled(false);
+		leftDigitalClock.setEndTurnButtonEnabled(true);
 		leftDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				timerController.endTurn();
-				rightDigitalClock.setEndTurnButtonEnabled(false);
+				toggleEndTurnButtons();
+				setActivePlayerBackgroundColor();
+				rightDigitalClock.setEndTurnButtonEnabled(true);
 			}
 		});
 
@@ -91,14 +93,16 @@ public class GUI extends JFrame {
 		rightDigitalClock.setBorderTitle("Player 2");
 		rightDigitalClock.setButtonText("End turn (alt-m)");
 		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
-		rightDigitalClock.setBackgroundColor(Color.lightGray);
-		rightDigitalClock.setEndTurnButtonEnabled(false);
+		rightDigitalClock.setBackgroundColor(Color.white);
+		rightDigitalClock.setEndTurnButtonEnabled(true);
 		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				timerController.endTurn();
-				leftDigitalClock.setEndTurnButtonEnabled(false);
+				toggleEndTurnButtons();
+				setActivePlayerBackgroundColor();
+				leftDigitalClock.setEndTurnButtonEnabled(true);
 			}
 		});
 
@@ -135,6 +139,25 @@ public class GUI extends JFrame {
 				timerController.decrementGameTime();
 			}
 		});
+	}
+
+	private void setActivePlayerBackgroundColor() {
+		if (timerController.getActiveTimer().equals(timerController.getLeftTimer())) {
+			leftDigitalClock.setBackgroundColor(Color.black);
+			rightDigitalClock.setBackgroundColor(Color.white);
+		} else if (timerController.getActiveTimer().equals(timerController.getRightTimer())) {
+			leftDigitalClock.setBackgroundColor(Color.white);
+			rightDigitalClock.setBackgroundColor(Color.black);
+		}
+	}
+
+	private void toggleEndTurnButtons() {
+		if (this.leftDigitalClock.isEndTurnButtonEnabled()) {
+			this.leftDigitalClock.setEndTurnButtonEnabled(false);
+		}
+		if (this.rightDigitalClock.isEndTurnButtonEnabled()) {
+			this.rightDigitalClock.setEndTurnButtonEnabled(false);
+		}
 	}
 
 }

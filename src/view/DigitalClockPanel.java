@@ -34,7 +34,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		setLayout(new GridBagLayout());
 		setBackground(Color.white);
 
-		c.insets = new Insets(50, 10, 10, 10);
+		c.insets = new Insets(30, 30, 30, 30);
 		c.gridx = 0;
 		c.gridy = 0;
 
@@ -76,7 +76,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 	}
 
 	public void setBackgroundColor(Color color) {
-		timeField.setBackground(color);
+		timerPanel.setBackground(color);
 	}
 
 	public void setEndTurnButtonEnabled(boolean tof) {
@@ -92,6 +92,10 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 			System.out.println(evt);
 		}
 
+	}
+
+	public boolean isEndTurnButtonEnabled() {
+		return this.endTurnButton.isEnabled();
 	}
 
 }
