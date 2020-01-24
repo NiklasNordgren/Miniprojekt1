@@ -20,8 +20,7 @@ public class Main {
 		 * 
 		 */
 
-		int gameTimeInSeconds = 120;
-		TimerController timeController = new TimerController(gameTimeInSeconds);
+		TimerController timeController = new TimerController(0, 2, 0);
 		new GUI(timeController);
 	}
 }

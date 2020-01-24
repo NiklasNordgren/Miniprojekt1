@@ -6,59 +6,77 @@ import java.util.TimerTask;
 
 public class Timer {
 
-	private long totalGameTimeSeconds;
-	private long remainingGameTimeSeconds;
+	private Time remainingTime;
+	private Time totalGameTime;
 	private String remainingGameTimeAsFormattedString;
 	private boolean isRunning;
 	private PropertyChangeSupport propertyChangeSupport;
 
-	public Timer() {
-		this(3);
-	}
 
-	public Timer(long totalGameTimeSeconds) {
-		this.totalGameTimeSeconds = totalGameTimeSeconds;
-		this.remainingGameTimeSeconds = totalGameTimeSeconds;
+	public Timer(int hours, int minutes, int seconds) {
+		this.remainingTime = new Time(hours, minutes, seconds);
+		this.totalGameTime = remainingTime;
 		this.isRunning = false;
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
-		setupTimer();
+		this.setupTimer();
 	}
 
-	public long getTotalGameTimeSeconds() {
-		return totalGameTimeSeconds;
+	public Time getRemainingTime() {
+		return remainingTime;
+	}
+	
+	public void setRemainingTime(Time remainingTime) {
+		this.remainingTime = remainingTime;
+	}
+	
+	public Time getTotalGameTime() {
+		return this.totalGameTime;
 	}
 
-	public void setTotalGameTimeSeconds(long totalGameTimeSeconds) {
-		this.totalGameTimeSeconds = totalGameTimeSeconds;
+	public void setTotalGameTime(Time totalGameTime) {
+		this.totalGameTime = totalGameTime;
 	}
 
-	public void incrementTime() {
+	public void incrementCurrentTime() {
 		if (!this.isRunning) {
-			this.totalGameTimeSeconds++;
-			this.remainingGameTimeSeconds++;
+			this.remainingTime.incrementTime();
 			this.updateRemainingGameTimeAsFormattedString();
 		}
 	}
-
-	public void decrementTime() {
-		if (!this.isRunning && totalGameTimeSeconds > 0) {
-			this.remainingGameTimeSeconds--;
-			this.totalGameTimeSeconds--;
-			this.updateRemainingGameTimeAsFormattedString();
-		}
+	
+	public void incrementTotalTime() {
+		this.totalGameTime.incrementTime();
 	}
 
-	public long getRemainingGameTimeSeconds() {
-		return remainingGameTimeSeconds;
+	public void decrementRemainingTime() {
+		if (!this.isRunning && !totalGameTime.isTimeZero()) {
+			this.decreaseRemainingTime();
+		}
+	}
+	
+//	public void decrementTotalGameTime() {
+//		this.totalGameTime.decrementSeconds();
+//	}
+
+	public void decrementRemainingHours() {
+		this.remainingTime.decrementHours();
+	}
+	
+	public void decrementRemainingMinutes() {
+		this.remainingTime.decrementMinutes();
+	}
+	
+	public void decrementRemainingSeconds() {
+		this.remainingTime.decrementSeconds();
 	}
 
 	public void decreaseRemainingTime() {
-		this.remainingGameTimeSeconds--;
+		this.remainingTime.decrementSeconds();;
 		this.updateRemainingGameTimeAsFormattedString();
 	}
 
 	public boolean isRunning() {
-		return isRunning;
+		return this.isRunning;
 	}
 
 	public void setRunning(boolean isRunning) {
@@ -66,16 +84,7 @@ public class Timer {
 		this.propertyChangeSupport.firePropertyChange("isRunning", !isRunning, isRunning);
 	}
 
-	private void updateRemainingGameTimeAsFormattedString() {
-		int hours = Math.toIntExact(remainingGameTimeSeconds / 3600);
-		int minutes = Math.toIntExact((remainingGameTimeSeconds - (3600 * hours)) / 60);
-		int seconds = Math.toIntExact((remainingGameTimeSeconds - (3600 * hours) - (minutes * 60)));
-
-		this.remainingGameTimeAsFormattedString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-		this.propertyChangeSupport.firePropertyChange("remainingGameTimeAsFormattedString", null,
-				remainingGameTimeAsFormattedString);
-	}
-
+	
 	public void addObserver(PropertyChangeListener propertyChangeListener) {
 		this.propertyChangeSupport.addPropertyChangeListener("isRunning", propertyChangeListener);
 		this.propertyChangeSupport.addPropertyChangeListener("remainingGameTimeAsFormattedString",
@@ -93,8 +102,17 @@ public class Timer {
 
 	public void reset() {
 		this.stop();
-		this.remainingGameTimeSeconds = totalGameTimeSeconds;
+		int hours = totalGameTime.getHours();
+		int minutes = totalGameTime.getMinutes();
+		int seconds = totalGameTime.getSeconds();
+		this.remainingTime = new Time(hours, minutes, seconds);
 		this.updateRemainingGameTimeAsFormattedString();
+	}
+	
+	private void updateRemainingGameTimeAsFormattedString() {
+		this.remainingGameTimeAsFormattedString = remainingTime.toString();
+		this.propertyChangeSupport.firePropertyChange("remainingGameTimeAsFormattedString", null,
+				remainingGameTimeAsFormattedString);
 	}
 
 	private void setupTimer() {
@@ -103,7 +121,7 @@ public class Timer {
 
 			@Override
 			public void run() {
-				if (isRunning && remainingGameTimeSeconds > 0) {
+				if (isRunning && !remainingTime.isTimeZero()) {
 					decreaseRemainingTime();
 				} else {
 					stop();

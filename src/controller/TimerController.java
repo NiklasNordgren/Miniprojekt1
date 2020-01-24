@@ -2,26 +2,35 @@ package controller;
 
 import java.beans.PropertyChangeListener;
 
+import model.Time;
 import model.Timer;
 
 public class TimerController {
+
+	public enum TimeComponent {
+		HOUR, MINUTE, SECOND
+	}
+
+	public enum TimerPosition {
+		LEFT, RIGHT, BOTH
+	}
 
 	private Timer activeTimer;
 	private Timer leftTimer;
 	private Timer rightTimer;
 
 	public TimerController() {
-		this(180);
+		this(0, 2, 0);
 	}
 
-	public TimerController(int gameTimeInSeconds) {
-		this.createTimers(gameTimeInSeconds);
+	public TimerController(int hours, int minutes, int seconds) {
+		this.createTimers(hours, minutes, seconds);
 		this.activeTimer = leftTimer;
 	}
 
-	private void createTimers(int gameTimeInSeconds) {
-		this.leftTimer = new Timer(gameTimeInSeconds);
-		this.rightTimer = new Timer(gameTimeInSeconds);
+	private void createTimers(int hours, int minutes, int seconds) {
+		this.leftTimer = new Timer(hours, minutes, seconds);
+		this.rightTimer = new Timer(hours, minutes, seconds);
 	}
 
 	public void startAndStop() {
@@ -36,23 +45,82 @@ public class TimerController {
 		this.rightTimer.reset();
 	}
 
-	public void incrementGameTime() {
-
-		// TODO: Needs two inparameters, which time unit & timer to increment
+	public void incrementGameTime(TimerPosition timerPosition, TimeComponent timeComponent) {
+		switch (timerPosition) {
+		case LEFT:
+			increase(timeComponent, leftTimer);
+			break;
+		case RIGHT:
+			increase(timeComponent, rightTimer);
+			break;
+		case BOTH:
+			increase(timeComponent, leftTimer, rightTimer);
+			break;
+		default:
+			throw new RuntimeException(
+					"Error in incrementGameTime(). Legal values are LEFT, RIGHT and BOTH. Supplied value was"
+							+ timeComponent.toString());
+			break;
+		}
 
 		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
-			this.leftTimer.incrementTime();
-			this.rightTimer.incrementTime();
+			this.leftTimer.incrementCurrentTime();
+			this.rightTimer.incrementCurrentTime();
 		}
 	}
 
-	public void decrementGameTime() {
-
-		// TODO: Needs two inparameters, which time unit & timer to decrement
-
+	public void decrementGameTime(TimerPosition timerPosition, TimeComponent timeComponent) {
 		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
-			this.leftTimer.decrementTime();
-			this.rightTimer.decrementTime();
+			switch (timerPosition) {
+			case LEFT:
+				decrease(timeComponent, leftTimer);
+				break;
+			case RIGHT:
+				decrease(timeComponent, rightTimer);
+				break;
+			case BOTH:
+				decrease(timeComponent, leftTimer, rightTimer);
+				break;
+			default:
+				throw new RuntimeException(
+						"Error in incrementGameTime(). Legal values are LEFT, RIGHT and BOTH. Supplied value was"
+								+ timeComponent.toString());
+			}
+		}
+	}
+
+	private void decrease(TimeComponent timeComponent, Timer timer) {
+		switch (timeComponent) {
+		case HOUR:
+			timer.decrementRemainingHours();
+			break;
+		case MINUTE:
+			timer.decrementRemainingMinutes();
+			break;
+		case SECOND:
+			timer.decrementRemainingSeconds();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void decrease(TimeComponent timeComponent, Timer timer1, Timer timer2) {
+		switch (timeComponent) {
+		case HOUR:
+			timer1.decrementRemainingHours();
+			timer2.decrementRemainingHours();
+			break;
+		case MINUTE:
+			timer1.decrementRemainingMinutes();
+			timer2.decrementRemainingMinutes();
+			break;
+		case SECOND:
+			timer1.decrementRemainingSeconds();
+			timer2.decrementRemainingSeconds();
+			break;
+		default:
+			break;
 		}
 	}
 
