@@ -88,6 +88,22 @@ public class TimerController {
 			}
 		}
 	}
+	
+	private void increase(TimeComponent timeComponent, Timer timer1, Timer timer2) {
+		switch (timeComponent) {
+		case HOUR:
+			timer1.incrementRemainingHours();
+			break;
+		case MINUTE:
+			timer.decrementRemainingMinutes();
+			break;
+		case SECOND:
+			timer.decrementRemainingSeconds();
+			break;
+		default:
+			break;
+		}
+	}
 
 	private void decrease(TimeComponent timeComponent, Timer timer) {
 		switch (timeComponent) {

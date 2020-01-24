@@ -59,15 +59,15 @@ public class Timer {
 //	}
 
 	public void decrementRemainingHours() {
-		this.remainingTime.decrementHours();
+		this.totalGameTime.decrementHours();
 	}
 	
 	public void decrementRemainingMinutes() {
-		this.remainingTime.decrementMinutes();
+		this.totalGameTime.decrementMinutes();
 	}
 	
 	public void decrementRemainingSeconds() {
-		this.remainingTime.decrementSeconds();
+		this.totalGameTime.decrementSeconds();
 	}
 
 	public void decreaseRemainingTime() {
