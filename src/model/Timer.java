@@ -5,6 +5,10 @@ import java.beans.PropertyChangeSupport;
 import java.util.TimerTask;
 
 public class Timer {
+	
+	public enum TimeComponent {
+		HOUR, MINUTE, SECOND
+	}
 
 	private long totalGameTimeSeconds;
 	private long remainingGameTimeSeconds;
@@ -55,6 +59,44 @@ public class Timer {
 	public void decreaseRemainingTime() {
 		this.remainingGameTimeSeconds--;
 		this.updateRemainingGameTimeAsFormattedString();
+	}
+	
+	public void increaseTotalGameTime(TimeComponent timeComponent) {
+		switch (timeComponent) {
+		case HOUR:
+			totalGameTimeSeconds += 3600;
+			break;
+		case MINUTE:
+			totalGameTimeSeconds += 60;
+			break;
+		case SECOND:
+			totalGameTimeSeconds += 1;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public void decreaseTotalGameTime(TimeComponent timeComponent) {
+		switch (timeComponent) {
+		case HOUR:
+			if (totalGameTimeSeconds > 3600) {
+				totalGameTimeSeconds -= 3600;
+			}
+			break;
+		case MINUTE:
+			if (totalGameTimeSeconds > 60) {
+				totalGameTimeSeconds -= 60;
+			}
+			break;
+		case SECOND:
+			if (totalGameTimeSeconds > 0) {
+				totalGameTimeSeconds -= 1;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	public boolean isRunning() {

@@ -3,9 +3,14 @@ package controller;
 import java.beans.PropertyChangeListener;
 
 import model.Timer;
+import model.Timer.TimeComponent;
 
 public class TimerController {
 
+	public enum TimerPosition {
+		LEFT, RIGHT, BOTH
+	}
+	
 	private Timer activeTimer;
 	private Timer leftTimer;
 	private Timer rightTimer;
@@ -36,23 +41,41 @@ public class TimerController {
 		this.rightTimer.reset();
 	}
 
-	public void incrementGameTime() {
-
-		// TODO: Needs two inparameters, which time unit & timer to increment
-
+	public void increaseTotalGameTime(TimerPosition timerPosition, TimeComponent timeComponent) {
 		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
-			this.leftTimer.incrementTime();
-			this.rightTimer.incrementTime();
+			switch (timerPosition) {
+			case LEFT:
+				leftTimer.increaseTotalGameTime(timeComponent);
+				break;
+			case RIGHT:
+				rightTimer.increaseTotalGameTime(timeComponent);
+				break;
+			case BOTH:
+				leftTimer.increaseTotalGameTime(timeComponent);
+				rightTimer.increaseTotalGameTime(timeComponent);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
-	public void decrementGameTime() {
-
-		// TODO: Needs two inparameters, which time unit & timer to decrement
-
+	public void decreaseTotalGameTime(TimerPosition timerPosition, TimeComponent timeComponent) {
 		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
-			this.leftTimer.decrementTime();
-			this.rightTimer.decrementTime();
+			switch (timerPosition) {
+			case LEFT:
+				leftTimer.decreaseTotalGameTime(timeComponent);
+				break;
+			case RIGHT:
+				rightTimer.decreaseTotalGameTime(timeComponent);
+				break;
+			case BOTH:
+				leftTimer.decreaseTotalGameTime(timeComponent);
+				rightTimer.decreaseTotalGameTime(timeComponent);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
