@@ -78,11 +78,13 @@ public class TimerController {
 	}
 
 	public void endTurn() {
+		this.activeTimer.stop();
 		if (this.activeTimer.equals(leftTimer)) {
 			this.activeTimer = rightTimer;
 		} else {
 			this.activeTimer = leftTimer;
 		}
+		this.activeTimer.run();
 	}
 
 	public Timer getActiveTimer() {
