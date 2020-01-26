@@ -19,12 +19,10 @@ import javax.swing.border.Border;
 public class DigitalClockPanel extends JPanel implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
+
 	private JTextField timeField = new JTextField();
 	private JButton endTurnButton = new JButton();
 	private JPanel timerPanel = new JPanel();
-	private JPanel endTurnPanel = new JPanel();
-	private GridBagConstraints c = new GridBagConstraints();
-	private Font font = new Font("Tahoma", Font.PLAIN, 40);
 
 	public DigitalClockPanel() {
 		init();
@@ -33,6 +31,9 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 	private void init() {
 		setLayout(new GridBagLayout());
 		setBackground(Color.white);
+
+		GridBagConstraints c = new GridBagConstraints();
+		Font font = new Font("Tahoma", Font.PLAIN, 40);
 
 		c.insets = new Insets(30, 30, 30, 30);
 		c.gridx = 0;
@@ -47,6 +48,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		timerPanel.setLayout(new GridBagLayout());
 		timerPanel.add(timeField, c);
 
+		JPanel endTurnPanel = new JPanel();
 		endTurnPanel.setBackground(Color.white);
 		endTurnPanel.setLayout(new GridBagLayout());
 		endTurnButton.setPreferredSize(new Dimension(150, 35));

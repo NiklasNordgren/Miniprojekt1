@@ -23,8 +23,9 @@ public class GUI extends JFrame {
 	private ButtonPanel buttonPanel;
 	private TimerController timerController;
 
-	public GUI(TimerController timerController) {
-		this.timerController = timerController;
+	public GUI() {
+		int gameTimeInSeconds = 120;
+		this.timerController = new TimerController(gameTimeInSeconds);
 		init();
 	}
 

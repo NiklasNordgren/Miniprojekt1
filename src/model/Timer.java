@@ -5,7 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.TimerTask;
 
 public class Timer {
-	
+
 	public enum TimeComponent {
 		HOUR, MINUTE, SECOND
 	}
@@ -56,11 +56,11 @@ public class Timer {
 		return remainingGameTimeSeconds;
 	}
 
-	public void decreaseRemainingTime() {
+	private void decreaseRemainingTime() {
 		this.remainingGameTimeSeconds--;
 		this.updateRemainingGameTimeAsFormattedString();
 	}
-	
+
 	public void increaseTotalGameTime(TimeComponent timeComponent) {
 		switch (timeComponent) {
 		case HOUR:
@@ -76,7 +76,7 @@ public class Timer {
 			break;
 		}
 	}
-	
+
 	public void decreaseTotalGameTime(TimeComponent timeComponent) {
 		switch (timeComponent) {
 		case HOUR:

@@ -20,8 +20,6 @@ public class ButtonPanel extends JPanel {
 	private JButton decrementGameTimeButton = new JButton("-");
 	private JButton moveCursorLeftButton = new JButton("<");
 	private JButton moveCursorRightButton = new JButton(">");
-	private JPanel mainPanel = new JPanel();
-	private JPanel southPanel = new JPanel();
 
 	public ButtonPanel() {
 		init();
@@ -40,6 +38,9 @@ public class ButtonPanel extends JPanel {
 		decrementGameTimeButton.setBackground(Color.lightGray);
 		moveCursorLeftButton.setBackground(Color.lightGray);
 		moveCursorRightButton.setBackground(Color.lightGray);
+
+		JPanel mainPanel = new JPanel();
+		JPanel southPanel = new JPanel();
 
 		mainPanel.setLayout(new BorderLayout());
 		southPanel.setLayout(new BorderLayout());
