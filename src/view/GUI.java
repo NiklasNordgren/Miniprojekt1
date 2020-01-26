@@ -14,14 +14,17 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.TimerController;
+import controller.TimerController.TimerPosition;
+import model.Timer.TimeComponent;
 
 public class GUI extends JFrame {
-
+	
 	private static final long serialVersionUID = 1L;
 	private DigitalClockPanel leftDigitalClock;
 	private DigitalClockPanel rightDigitalClock;
 	private ButtonPanel buttonPanel;
 	private TimerController timerController;
+	private TimerPosition selectedTimer = TimerPosition.BOTH;
 
 	public GUI() {
 		int gameTimeInSeconds = 120;
@@ -75,6 +78,7 @@ public class GUI extends JFrame {
 		leftDigitalClock.setButtonText("End turn (alt-z)");
 		leftDigitalClock.setButtonHotKey(KeyEvent.VK_Z);
 		leftDigitalClock.setEndTurnButtonEnabled(true);
+		leftDigitalClock.setSelectedField(TimeComponent.ALL);
 		leftDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 
 			@Override
@@ -96,6 +100,7 @@ public class GUI extends JFrame {
 		rightDigitalClock.setButtonHotKey(KeyEvent.VK_M);
 		rightDigitalClock.setBackgroundColor(Color.white);
 		rightDigitalClock.setEndTurnButtonEnabled(false);
+		rightDigitalClock.setSelectedField(TimeComponent.ALL);
 		rightDigitalClock.addEndTurnButtonActionListener(new ActionListener() {
 
 			@Override
@@ -103,7 +108,6 @@ public class GUI extends JFrame {
 				timerController.endTurn();
 				toggleEndTurnButtons();
 				setActivePlayerBackgroundColor();
-
 			}
 		});
 
@@ -116,7 +120,13 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				timerController.startAndStop();
-
+				if (timerController.isRunning()) {
+					leftDigitalClock.setSelectedField(TimeComponent.NONE);
+					rightDigitalClock.setSelectedField(TimeComponent.NONE);
+				} else {
+					leftDigitalClock.setSelectedField(TimeComponent.ALL);
+					rightDigitalClock.setSelectedField(TimeComponent.ALL);
+				}
 			}
 		});
 		buttonPanel.addResetButtonActionListener(new ActionListener() {
@@ -130,14 +140,144 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				timerController.incrementGameTime();
+				switch (selectedTimer) {
+				case BOTH:
+					timerController.increaseTime(TimerPosition.BOTH, TimeComponent.SECOND);
+					break;
+				case LEFT:
+					timerController.increaseTime(TimerPosition.LEFT, leftDigitalClock.getSelectedField());
+					break;
+				case RIGHT:
+					timerController.increaseTime(TimerPosition.RIGHT, leftDigitalClock.getSelectedField());
+					break;
+				default:
+					break;
+				}
 			}
 		});
 		buttonPanel.addDecrementGameTimeButtonActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				timerController.decrementGameTime();
+				switch (selectedTimer) {
+				case BOTH:
+					timerController.decreaseTime(TimerPosition.BOTH, TimeComponent.SECOND);
+					break;
+				case LEFT:
+					timerController.decreaseTime(TimerPosition.LEFT, leftDigitalClock.getSelectedField());
+					break;
+				case RIGHT:
+					timerController.decreaseTime(TimerPosition.RIGHT, leftDigitalClock.getSelectedField());
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		buttonPanel.addMoveCursorLeftButtonActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (timerController.isRunning()) {
+					return;
+				}
+				switch (selectedTimer) {
+				case BOTH:
+					selectedTimer = TimerPosition.LEFT;
+					leftDigitalClock.setSelectedField(TimeComponent.ALL);
+					rightDigitalClock.setSelectedField(TimeComponent.NONE);
+					break;
+				case LEFT:
+					switch (leftDigitalClock.getSelectedField()) {
+					case ALL:
+						leftDigitalClock.setSelectedField(TimeComponent.SECOND);
+						break;
+					case SECOND:
+						leftDigitalClock.setSelectedField(TimeComponent.MINUTE);
+						break;
+					case MINUTE:
+						leftDigitalClock.setSelectedField(TimeComponent.HOUR);
+						break;
+					case HOUR:
+						break;
+					default:
+						break;
+					}
+					break;
+				case RIGHT:
+					switch (rightDigitalClock.getSelectedField()) {
+					case ALL:
+						rightDigitalClock.setSelectedField(TimeComponent.ALL);
+						leftDigitalClock.setSelectedField(TimeComponent.ALL);
+						selectedTimer = TimerPosition.BOTH;
+						break;
+					case SECOND:
+						rightDigitalClock.setSelectedField(TimeComponent.MINUTE);
+						break;
+					case MINUTE:
+						rightDigitalClock.setSelectedField(TimeComponent.HOUR);
+						break;
+					case HOUR:
+						rightDigitalClock.setSelectedField(TimeComponent.ALL);
+						break;
+					default:
+						break;
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		buttonPanel.addMoveCursorRightButtonActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch (selectedTimer) {
+				case BOTH:
+					selectedTimer = TimerPosition.RIGHT;
+					rightDigitalClock.setSelectedField(TimeComponent.ALL);
+					leftDigitalClock.setSelectedField(TimeComponent.NONE);
+					break;
+				case LEFT:
+					switch (leftDigitalClock.getSelectedField()) {
+					case ALL:
+						leftDigitalClock.setSelectedField(TimeComponent.ALL);
+						rightDigitalClock.setSelectedField(TimeComponent.ALL);
+						selectedTimer = TimerPosition.BOTH;
+						break;
+					case SECOND:
+						leftDigitalClock.setSelectedField(TimeComponent.ALL);
+						break;
+					case MINUTE:
+						leftDigitalClock.setSelectedField(TimeComponent.SECOND);
+						break;
+					case HOUR:
+						leftDigitalClock.setSelectedField(TimeComponent.MINUTE);
+					default:
+						break;
+					}
+					break;
+				case RIGHT:
+					switch (rightDigitalClock.getSelectedField()) {
+					case ALL:
+						rightDigitalClock.setSelectedField(TimeComponent.HOUR);
+						break;
+					case HOUR:
+						rightDigitalClock.setSelectedField(TimeComponent.MINUTE);
+						break;
+					case MINUTE:
+						rightDigitalClock.setSelectedField(TimeComponent.SECOND);
+						break;
+					case SECOND:
+						break;
+					default:
+						break;
+					}
+					break;
+				default:
+					break;
+				}
 			}
 		});
 	}

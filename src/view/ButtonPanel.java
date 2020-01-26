@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 public class ButtonPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
 	private JButton playAndPauseButton = new JButton("Play/Pause");
 	private JButton resetButton = new JButton("Reset");
 	private JButton incrementGameTimeButton = new JButton("+");
