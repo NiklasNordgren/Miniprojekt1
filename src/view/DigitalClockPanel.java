@@ -118,19 +118,12 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String prop = evt.getPropertyName();
-		if (prop.equals("remainingGameTimeAsFormattedString")) {
+		if (prop.equals("remainingGameTimeAsFormattedString") || prop.equals("totalGameTimeAsFormattedString")) {
 			timeField.setText(evt.getNewValue().toString());
 			String[] timeComponents = evt.getNewValue().toString().split(":");
 			hourField.setText(timeComponents[0] + ":");
 			minuteField.setText(timeComponents[1] + ":");
 			secondField.setText(timeComponents[2]);
-		} else if (prop.equals("totalGameTimeAsFormattedString")) {
-			timeField.setText(evt.getNewValue().toString());
-			String[] timeComponents = evt.getNewValue().toString().split(":");
-			hourField.setText(timeComponents[0] + ":");
-			minuteField.setText(timeComponents[1] + ":");
-			secondField.setText(timeComponents[2]);
-			System.out.println("Reacted to totalgameTime");
 		}
 	}
 
@@ -153,7 +146,6 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 	 */
 	public void setSelectedField(TimeComponent selectedField) {
 		this.selectedField = selectedField;
-		System.out.println(selectedField);
 		stopBlinking();
 		List<JLabel> fields = new ArrayList<JLabel>();
 		switch (selectedField) {
