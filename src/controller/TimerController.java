@@ -14,6 +14,7 @@ public class TimerController {
 	private Timer activeTimer;
 	private Timer leftTimer;
 	private Timer rightTimer;
+	private boolean isReset = true;
 
 	public TimerController() {
 		this(180);
@@ -32,17 +33,20 @@ public class TimerController {
 	public void startAndStop() {
 		if (this.activeTimer.isRunning())
 			this.activeTimer.stop();
-		else
+		else {
 			this.activeTimer.run();
+			isReset = false;
+		}
 	}
 
 	public void reset() {
 		this.leftTimer.reset();
 		this.rightTimer.reset();
+		isReset = true;
 	}
 
-	public void increaseTotalGameTime(TimerPosition timerPosition, TimeComponent timeComponent) {
-		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
+	public void increaseTime(TimerPosition timerPosition, TimeComponent timeComponent) {
+		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning() && isReset) {
 			switch (timerPosition) {
 			case LEFT:
 				leftTimer.increaseTotalGameTime(timeComponent);
@@ -60,7 +64,7 @@ public class TimerController {
 		}
 	}
 
-	public void decreaseTotalGameTime(TimerPosition timerPosition, TimeComponent timeComponent) {
+	public void decreaseTime(TimerPosition timerPosition, TimeComponent timeComponent) {
 		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
 			switch (timerPosition) {
 			case LEFT:
@@ -114,24 +118,12 @@ public class TimerController {
 		return activeTimer;
 	}
 
-	public void setActiveTimer(Timer activeTimer) {
-		this.activeTimer = activeTimer;
-	}
-
 	public Timer getLeftTimer() {
 		return leftTimer;
 	}
 
-	public void setLeftTimer(Timer leftTimer) {
-		this.leftTimer = leftTimer;
-	}
-
 	public Timer getRightTimer() {
 		return rightTimer;
-	}
-
-	public void setRightTimer(Timer rightTimer) {
-		this.rightTimer = rightTimer;
 	}
 
 }
