@@ -123,9 +123,11 @@ public class GUI extends JFrame {
 				if (timerController.isRunning()) {
 					leftDigitalClock.setSelectedField(TimeComponent.NONE);
 					rightDigitalClock.setSelectedField(TimeComponent.NONE);
+					buttonPanel.directionalButtonsEnabled(false);
 				} else {
 					leftDigitalClock.setSelectedField(TimeComponent.ALL);
 					rightDigitalClock.setSelectedField(TimeComponent.ALL);
+					buttonPanel.directionalButtonsEnabled(true);
 				}
 			}
 		});
@@ -134,6 +136,7 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				timerController.reset();
+				buttonPanel.directionalButtonsEnabled(true);
 			}
 		});
 		buttonPanel.addIncrementGameTimeButtonActionListener(new ActionListener() {
@@ -178,9 +181,6 @@ public class GUI extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (timerController.isRunning()) {
-					return;
-				}
 				switch (selectedTimer) {
 				case BOTH:
 					selectedTimer = TimerPosition.LEFT;
@@ -230,7 +230,6 @@ public class GUI extends JFrame {
 			}
 		});
 		buttonPanel.addMoveCursorRightButtonActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				switch (selectedTimer) {

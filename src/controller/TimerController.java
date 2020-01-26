@@ -65,7 +65,7 @@ public class TimerController {
 	}
 
 	public void decreaseTime(TimerPosition timerPosition, TimeComponent timeComponent) {
-		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
+		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning() && isReset) {
 			switch (timerPosition) {
 			case LEFT:
 				leftTimer.decreaseTotalGameTime(timeComponent);
@@ -124,6 +124,10 @@ public class TimerController {
 
 	public Timer getRightTimer() {
 		return rightTimer;
+	}
+	
+	public boolean isReset() {
+		return isReset;
 	}
 
 }

@@ -150,7 +150,6 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		List<JLabel> fields = new ArrayList<JLabel>();
 		switch (selectedField) {
 		case NONE:
-			fields = Arrays.asList(hourField, minuteField, secondField);
 			stopBlinking();
 			return;
 		case ALL:

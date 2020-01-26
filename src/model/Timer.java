@@ -77,11 +77,11 @@ public class Timer {
 
 	public void decreaseTotalGameTime(TimeComponent timeComponent) {
 		if (timeComponent == TimeComponent.HOUR && totalGameTimeSeconds > 3600) {
-			totalGameTimeSeconds += 3600;
+			totalGameTimeSeconds -= 3600;
 		} else if (timeComponent == TimeComponent.MINUTE && totalGameTimeSeconds > 60) {
-			totalGameTimeSeconds += 60;
+			totalGameTimeSeconds -= 60;
 		} else if (timeComponent == TimeComponent.SECOND && totalGameTimeSeconds > 0) {
-			totalGameTimeSeconds += 1;
+			totalGameTimeSeconds -= 1;
 		}
 		updateTotalGameTimeAsFormattedString();
 	}

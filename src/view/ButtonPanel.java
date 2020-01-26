@@ -81,4 +81,10 @@ public class ButtonPanel extends JPanel {
 		moveCursorRightButton.addActionListener(actionListener);
 	}
 
+	public void directionalButtonsEnabled(boolean enabled) {
+		moveCursorLeftButton.setEnabled(enabled);
+		moveCursorRightButton.setEnabled(enabled);
+		incrementGameTimeButton.setEnabled(enabled);
+		decrementGameTimeButton.setEnabled(enabled);
+	}
 }
