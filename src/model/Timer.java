@@ -38,24 +38,6 @@ public class Timer {
 		this.totalGameTimeSeconds = totalGameTimeSeconds;
 	}
 
-//	public void incrementTime() {
-//		if (!this.isRunning) {
-//			this.totalGameTimeSeconds++;
-//			this.remainingGameTimeSeconds++;
-//			this.updateRemainingGameTimeAsFormattedString();
-//			this.updateTotalGameTimeAsFormattedString();
-//		}
-//	}
-
-//	public void decrementTime() {
-//		if (!this.isRunning && totalGameTimeSeconds > 0) {
-//			this.remainingGameTimeSeconds--;
-//			this.totalGameTimeSeconds--;
-//			this.updateRemainingGameTimeAsFormattedString();
-//			this.updateTotalGameTimeAsFormattedString();
-//		}
-//	}
-
 	public long getRemainingGameTimeSeconds() {
 		return remainingGameTimeSeconds;
 	}
