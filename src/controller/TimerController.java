@@ -7,14 +7,9 @@ import model.Timer.TimeComponent;
 
 public class TimerController {
 
-	public enum TimerPosition {
-		LEFT, RIGHT, BOTH
-	}
-	
 	private Timer activeTimer;
 	private Timer leftTimer;
 	private Timer rightTimer;
-	private boolean isReset = true;
 
 	public TimerController() {
 		this(180);
@@ -35,51 +30,25 @@ public class TimerController {
 			this.activeTimer.stop();
 		else {
 			this.activeTimer.run();
-			isReset = false;
 		}
 	}
 
 	public void reset() {
 		this.leftTimer.reset();
 		this.rightTimer.reset();
-		isReset = true;
 	}
 
-	public void increaseTime(TimerPosition timerPosition, TimeComponent timeComponent) {
-		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning() && isReset) {
-			switch (timerPosition) {
-			case LEFT:
-				leftTimer.increaseTotalGameTime(timeComponent);
-				break;
-			case RIGHT:
-				rightTimer.increaseTotalGameTime(timeComponent);
-				break;
-			case BOTH:
-				leftTimer.increaseTotalGameTime(timeComponent);
-				rightTimer.increaseTotalGameTime(timeComponent);
-				break;
-			default:
-				break;
-			}
+	public void increaseTime(TimeComponent timeComponent) {
+		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
+			leftTimer.increaseTotalGameTime(timeComponent);
+			rightTimer.increaseTotalGameTime(timeComponent);
 		}
 	}
 
-	public void decreaseTime(TimerPosition timerPosition, TimeComponent timeComponent) {
-		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning() && isReset) {
-			switch (timerPosition) {
-			case LEFT:
-				leftTimer.decreaseTotalGameTime(timeComponent);
-				break;
-			case RIGHT:
-				rightTimer.decreaseTotalGameTime(timeComponent);
-				break;
-			case BOTH:
-				leftTimer.decreaseTotalGameTime(timeComponent);
-				rightTimer.decreaseTotalGameTime(timeComponent);
-				break;
-			default:
-				break;
-			}
+	public void decreaseTime(TimeComponent timeComponent) {
+		if (!this.leftTimer.isRunning() && !this.rightTimer.isRunning()) {
+			leftTimer.decreaseTotalGameTime(timeComponent);
+			rightTimer.decreaseTotalGameTime(timeComponent);
 		}
 	}
 
@@ -124,10 +93,6 @@ public class TimerController {
 
 	public Timer getRightTimer() {
 		return rightTimer;
-	}
-	
-	public boolean isReset() {
-		return isReset;
 	}
 
 }

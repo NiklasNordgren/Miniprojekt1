@@ -7,15 +7,15 @@ import java.util.TimerTask;
 public class Timer {
 
 	public enum TimeComponent {
-		ALL, HOUR, MINUTE, SECOND, NONE
+		HOUR, MINUTE, SECOND
 	}
 
 	private long totalGameTimeSeconds;
 	private long remainingGameTimeSeconds;
 	private String remainingGameTimeAsFormattedString;
-	private String totalGameTimeAsFormattedString;
 	private boolean isRunning;
 	private PropertyChangeSupport propertyChangeSupport;
+	private boolean isReset;
 
 	public Timer() {
 		this(3);
@@ -26,6 +26,7 @@ public class Timer {
 		this.remainingGameTimeSeconds = totalGameTimeSeconds;
 		this.isRunning = false;
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
+		this.isReset = true;
 		setupTimer();
 	}
 
@@ -37,23 +38,23 @@ public class Timer {
 		this.totalGameTimeSeconds = totalGameTimeSeconds;
 	}
 
-	public void incrementTime() {
-		if (!this.isRunning) {
-			this.totalGameTimeSeconds++;
-			this.remainingGameTimeSeconds++;
-			this.updateRemainingGameTimeAsFormattedString();
-			this.updateTotalGameTimeAsFormattedString();
-		}
-	}
+//	public void incrementTime() {
+//		if (!this.isRunning) {
+//			this.totalGameTimeSeconds++;
+//			this.remainingGameTimeSeconds++;
+//			this.updateRemainingGameTimeAsFormattedString();
+//			this.updateTotalGameTimeAsFormattedString();
+//		}
+//	}
 
-	public void decrementTime() {
-		if (!this.isRunning && totalGameTimeSeconds > 0) {
-			this.remainingGameTimeSeconds--;
-			this.totalGameTimeSeconds--;
-			this.updateRemainingGameTimeAsFormattedString();
-			this.updateTotalGameTimeAsFormattedString();
-		}
-	}
+//	public void decrementTime() {
+//		if (!this.isRunning && totalGameTimeSeconds > 0) {
+//			this.remainingGameTimeSeconds--;
+//			this.totalGameTimeSeconds--;
+//			this.updateRemainingGameTimeAsFormattedString();
+//			this.updateTotalGameTimeAsFormattedString();
+//		}
+//	}
 
 	public long getRemainingGameTimeSeconds() {
 		return remainingGameTimeSeconds;
@@ -65,6 +66,9 @@ public class Timer {
 	}
 
 	public void increaseTotalGameTime(TimeComponent timeComponent) {
+		if (!isReset) {
+			return;
+		}
 		if (timeComponent == TimeComponent.HOUR) {
 			totalGameTimeSeconds += 3600;
 		} else if (timeComponent == TimeComponent.MINUTE) {
@@ -72,10 +76,14 @@ public class Timer {
 		} else if (timeComponent == TimeComponent.SECOND) {
 			totalGameTimeSeconds += 1;
 		}
-		updateTotalGameTimeAsFormattedString();
+		remainingGameTimeSeconds = totalGameTimeSeconds;
+		updateRemainingGameTimeAsFormattedString();
 	}
 
-	public void decreaseTotalGameTime(TimeComponent timeComponent) {
+	public void decreaseTotalGameTime(TimeComponent timeComponent) {	
+		if (!isReset) {
+			return;
+		}
 		if (timeComponent == TimeComponent.HOUR && totalGameTimeSeconds > 3600) {
 			totalGameTimeSeconds -= 3600;
 		} else if (timeComponent == TimeComponent.MINUTE && totalGameTimeSeconds > 60) {
@@ -83,9 +91,10 @@ public class Timer {
 		} else if (timeComponent == TimeComponent.SECOND && totalGameTimeSeconds > 0) {
 			totalGameTimeSeconds -= 1;
 		}
-		updateTotalGameTimeAsFormattedString();
+		remainingGameTimeSeconds = totalGameTimeSeconds;
+		updateRemainingGameTimeAsFormattedString();
 	}
-
+	
 	public boolean isRunning() {
 		return isRunning;
 	}
@@ -96,35 +105,24 @@ public class Timer {
 	}
 
 	private void updateRemainingGameTimeAsFormattedString() {
-		this.remainingGameTimeAsFormattedString = timeInSecondsToString(remainingGameTimeSeconds);
+		int hours = Math.toIntExact(remainingGameTimeSeconds / 3600);
+		int minutes = Math.toIntExact((remainingGameTimeSeconds - (3600 * hours)) / 60);
+		int seconds = Math.toIntExact((remainingGameTimeSeconds - (3600 * hours) - (minutes * 60)));
+		this.remainingGameTimeAsFormattedString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 		this.propertyChangeSupport.firePropertyChange("remainingGameTimeAsFormattedString", null,
 				remainingGameTimeAsFormattedString);
 	}
 	
-	private void updateTotalGameTimeAsFormattedString() {
-		this.totalGameTimeAsFormattedString = timeInSecondsToString(totalGameTimeSeconds);
-		this.propertyChangeSupport.firePropertyChange("totalGameTimeAsFormattedString", null,
-				totalGameTimeAsFormattedString);
-	}
-	
-	private String timeInSecondsToString(long timeInSeconds) {
-		int hours = Math.toIntExact(timeInSeconds / 3600);
-		int minutes = Math.toIntExact((timeInSeconds - (3600 * hours)) / 60);
-		int seconds = Math.toIntExact((timeInSeconds - (3600 * hours) - (minutes * 60)));
-		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
-	}
-
 	public void addObserver(PropertyChangeListener propertyChangeListener) {
 		this.propertyChangeSupport.addPropertyChangeListener("isRunning", propertyChangeListener);
 		this.propertyChangeSupport.addPropertyChangeListener("remainingGameTimeAsFormattedString",
-				propertyChangeListener);
-		this.propertyChangeSupport.addPropertyChangeListener("totalGameTimeAsFormattedString",
 				propertyChangeListener);
 		this.updateRemainingGameTimeAsFormattedString();
 	}
 
 	public void run() {
 		this.isRunning = true;
+		isReset = false;
 	}
 
 	public void stop() {
@@ -134,6 +132,7 @@ public class Timer {
 	public void reset() {
 		this.stop();
 		this.remainingGameTimeSeconds = totalGameTimeSeconds;
+		isReset = true;
 		this.updateRemainingGameTimeAsFormattedString();
 	}
 

@@ -8,9 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,10 +22,6 @@ import model.Timer.TimeComponent;
 
 public class DigitalClockPanel extends JPanel implements PropertyChangeListener {
 
-//	public enum SelectedField {
-//		ALL, HOUR, MINUTE, SECOND, NONE
-//	}
-
 	private static final long serialVersionUID = 1L;
 
 	private JTextField timeField = new JTextField();
@@ -37,7 +30,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 	private JLabel secondField = new JLabel();
 	private JButton endTurnButton = new JButton();
 	private JPanel timerPanel = new JPanel();
-	private TimeComponent selectedField = TimeComponent.ALL;
+	private TimeComponent selectedField = TimeComponent.SECOND;
 	private Timer blinkTimer = new Timer();
 
 	public DigitalClockPanel() {
@@ -117,8 +110,7 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		String prop = evt.getPropertyName();
-		if (prop.equals("remainingGameTimeAsFormattedString") || prop.equals("totalGameTimeAsFormattedString")) {
+		if (evt.getPropertyName().equals("remainingGameTimeAsFormattedString")) {
 			timeField.setText(evt.getNewValue().toString());
 			String[] timeComponents = evt.getNewValue().toString().split(":");
 			hourField.setText(timeComponents[0] + ":");
@@ -135,62 +127,53 @@ public class DigitalClockPanel extends JPanel implements PropertyChangeListener 
 		this.endTurnButton.grabFocus();
 	}
 
-	public TimeComponent getSelectedField() {
+	public TimeComponent getTimeComponent() {
 		return selectedField;
 	}
 
 	/**
 	 * The selected field starts blinking.
 	 * 
-	 * @param selectedField
+	 * @param timeComponent
 	 */
-	public void setSelectedField(TimeComponent selectedField) {
-		this.selectedField = selectedField;
+	public void setTimeComponent(TimeComponent timeComponent) {
+		selectedField = timeComponent;
 		stopBlinking();
-		List<JLabel> fields = new ArrayList<JLabel>();
-		switch (selectedField) {
-		case NONE:
-			stopBlinking();
-			return;
-		case ALL:
-			fields = Arrays.asList(hourField, minuteField, secondField);
-			break;
+		switch (timeComponent) {
 		case HOUR:
-			fields.add(hourField);
+			blinkField(hourField);
 			break;
 		case MINUTE:
-			fields.add(minuteField);
+			blinkField(minuteField);
 			break;
 		case SECOND:
-			fields.add(secondField);
+			blinkField(secondField);
 			break;
 		default:
 			break;
 		}
-		blinkSelectedFields(fields);
 	}
 
-	private void blinkSelectedFields(List<JLabel> labels) {
+	private void blinkField(JLabel label) {
 		blinkTimer = new Timer();
 		setAllFieldTextColor(Color.BLACK);
 		blinkTimer.scheduleAtFixedRate(new TimerTask() {
 
 			@Override
 			public void run() {
-				labels.forEach(label -> {
-					if (label.getForeground() == Color.BLACK) {
-						label.setForeground(Color.WHITE);
-					} else {
-						label.setForeground(Color.BLACK);
-					}
-				});
+				if (label.getForeground() == Color.BLACK) {
+					label.setForeground(Color.WHITE);
+				} else {
+					label.setForeground(Color.BLACK);
+				}
 			}
 		}, 0, 700);
 	}
-	
-	private void stopBlinking() {
+
+	public void stopBlinking() {
 		blinkTimer.cancel();
 		setAllFieldTextColor(Color.BLACK);
+		
 	}
 
 	private void setAllFieldTextColor(Color color) {
